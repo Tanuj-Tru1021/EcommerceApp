@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, } from 'react-native'
 import React from 'react'
 
-const ProductCard = ({ onPressImage, src, onPressText, title, price, category, count, rate, onPressAdd, add, disable }) => {
+const ProductCard = ({ onPressImage, src, onPressText, title, price, category, count, rate, onPressAdd, add }) => {
     return (
         <View style={{ backgroundColor: 'white', paddingHorizontal: 16, paddingVertical: 16, borderRadius: 8, marginTop: 20, elevation: 100, shadowColor: 'white', }}>
             <View style={{ flexDirection: 'row' }}>
@@ -39,10 +39,8 @@ const ProductCard = ({ onPressImage, src, onPressText, title, price, category, c
                     <TouchableOpacity
                         style={{ backgroundColor: {add} ? 'orange' : 'grey', borderRadius: 4, justifyContent: 'center', alignItems: 'center', marginTop: 4, paddingVertical: 4, width: '100%' }}
                         onPress={onPressAdd}
-                        // disabled={disable}
                     >
                         <Text style={{ fontSize: 18, color: 'white', fontWeight: 500 }}>
-                            {/* {{add} ? ' */}
                             Add to Cart
                             
                         </Text>
