@@ -19,17 +19,16 @@ const Home = ({ navigation }) => {
   const itemsInCart = countUniqueItems()
   return (
     <View style={{ flex: 1, backgroundColor: '#002e65', paddingHorizontal: 16 }}>
-
+      <Header onPressLogout={async () => {
+        await AsyncStorage.removeItem('LoggedEmail')
+        await AsyncStorage.removeItem('LoggedPassword')
+        navigation.navigate('Login')
+      }}
+        onPressCart={() => navigation.navigate('Cart')}
+        count={itemsInCart} />
       <FlatList
         data={products}
         keyExtractor={item => item.id}
-        ListHeaderComponent={<Header onPressLogout={async () => {
-          await AsyncStorage.removeItem('LoggedEmail')
-          await AsyncStorage.removeItem('LoggedPassword')
-          navigation.navigate('Login')
-        }}
-          onPressCart={() => navigation.navigate('Cart')}
-          count={itemsInCart} />}
         renderItem={({ item }) => {
           return (
 
@@ -39,7 +38,7 @@ const Home = ({ navigation }) => {
                 setShow(true)
               }}
               src={item.image}
-              onPressText={() => {
+              onPressCard={() => {
                 navigation.navigate('ProductDetails', { item: item })
               }}
               title={item.title}
@@ -48,6 +47,7 @@ const Home = ({ navigation }) => {
               count={item.rating.count}
               rate={item.rating.rate}
               onPressAdd={() => {
+                alert("Item added to cart")
                 addToCart(item)
                 setAdd(false)
               }}

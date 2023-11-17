@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Ecommerce from '../../assets/ecommerce.png'
+import EyeOpen from '../../assets/eye-open.png'
+import EyeClosed from '../../assets/eye-closed.png'
 
 const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/
 
@@ -10,15 +12,27 @@ const Login = ({ navigation }) => {
     email: '',
     password: '',
   })
-  const [error, setError] = useState({})
+
+  const [hidePassword, setHidePassword] = useState(true)
+
+  const manageVisibility = () => {
+    setHidePassword(!hidePassword)
+  }
 
   const getData = async () => {
     await AsyncStorage.setItem('Email', credentials.email)
     await AsyncStorage.setItem('Password', credentials.password)
+    setCredentials({
+      email: '',
+      password: ''
+    })
     navigation.navigate('Home')
   }
   return (
-    <ScrollView contentContainerStyle={{ flex: 1, backgroundColor: '#002e65' }}>
+    <ScrollView
+      keyboardShouldPersistTaps='handled'
+      style={{ flex: 1, backgroundColor: '#002e65' }}
+    >
       <Image
         source={Ecommerce}
         style={{ height: 250, width: '100%', }}
@@ -36,7 +50,6 @@ const Login = ({ navigation }) => {
           keyboardType='email-address'
           onChangeText={(text) => {
             setCredentials({ ...credentials, "email": text.trim() })
-            setError(prev => ({ ...prev, email: (!text) }))
           }}
           value={credentials.email}
           style={{ paddingVertical: 6, paddingLeft: 16, marginBottom: 16, backgroundColor: 'white', borderRadius: 8 }}
@@ -45,17 +58,24 @@ const Login = ({ navigation }) => {
         <Text style={{ fontSize: 20, color: 'white', marginBottom: 8 }}>
           Password
         </Text>
-        <TextInput
-          placeholder='Enter your password'
-          placeholderTextColor={'grey'}
-          secureTextEntry
-          onChangeText={(text) => {
-            setCredentials({ ...credentials, "password": text.trim() })
-            setError(prev => ({ ...prev, password: (!text) }))
-          }}
-          value={credentials.password}
-          style={{ paddingVertical: 6, paddingLeft: 16, marginBottom: 16, backgroundColor: 'white', borderRadius: 8 }}
-        />
+        <View style={{flexDirection:'row'}}>
+          <TextInput
+            placeholder='Enter your password'
+            placeholderTextColor={'grey'}
+            secureTextEntry={hidePassword}
+            onChangeText={(text) => {
+              setCredentials({ ...credentials, "password": text.trim() })
+            }}
+            value={credentials.password}
+            style={{ paddingVertical: 6, paddingHorizontal: 16, marginBottom: 16, backgroundColor: 'white', borderRadius: 8, width: '100%', position:'relative' }}
+          />
+          <TouchableOpacity onPress={() => manageVisibility()}>
+            <Image 
+              source={hidePassword ? require('../../assets/eye-closed.png') : require('../../assets/eye-open.png')}
+              style={{ width: 27, height: 24, position:'absolute', tintColor:'#C4C4C4', justifyContent:'center', top: 8, right: 12}}
+            />
+          </TouchableOpacity>
+        </View>
 
         <TouchableOpacity
           style={{ backgroundColor: '#00a3e5', paddingVertical: 20, justifyContent: 'center', alignItems: 'center', borderRadius: 37, marginBottom: 30 }}

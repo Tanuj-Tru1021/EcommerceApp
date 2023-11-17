@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, Image, TouchableOpacity, Modal } from 'react-native'
 import React, { useContext, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Header from '../components/Header'
@@ -8,6 +8,8 @@ const ProductDetails = ({ route, navigation }) => {
     const { item } = route.params
     const { cart, addToCart } = useContext(ApiContext)
     const [add, setAdd] = useState(false)
+    const [disable, setDisable] = useState(false)
+    const [show, setShow] = useState(false)
     const { image, title, price, category, description } = item
     const { rate, count } = item.rating
     const review = rate > 3.5 ? "Good" : rate > 2 && rate < 3.5 ? "Average" : "Bad"
@@ -30,10 +32,14 @@ const ProductDetails = ({ route, navigation }) => {
             />
             <ScrollView style={{ flex: 1, marginTop: 10 }}>
                 <View style={{ backgroundColor: 'white', paddingHorizontal: 8, marginBottom: 40, borderRadius: 16 }}>
-                    <Image
-                        src={image}
-                        style={{ height: 250, width: 200, marginVertical: 15, alignSelf: 'center' }}
-                    />
+                    <TouchableOpacity onPress={() => {
+                        setShow(true)
+                    }}>
+                        <Image
+                            src={image}
+                            style={{ height: 250, width: 200, marginVertical: 15, alignSelf: 'center' }}
+                        />
+                    </TouchableOpacity>
                     <Text style={{ fontSize: 22, color: 'black', fontWeight: 500, marginTop: 15 }}>
                         {title}
                     </Text>
@@ -68,9 +74,12 @@ const ProductDetails = ({ route, navigation }) => {
                     }
                     <TouchableOpacity
                         onPress={() => {
+                            alert("Item added to cart")
                             addToCart(item)
                             setAdd(true)
+                            setDisable(true)
                         }}
+                        disabled={disable}
                         style={{ backgroundColor: !add ? 'orange' : 'grey', borderRadius: 4, justifyContent: 'center', alignItems: 'center', marginVertical: 6, paddingVertical: 4, width: '100%' }}
                     >
                         <Text style={{ fontSize: 18, color: 'white', fontWeight: 500 }}>
@@ -79,6 +88,21 @@ const ProductDetails = ({ route, navigation }) => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
+
+            <Modal
+                visible={show}
+                animationType='fade'
+                transparent={true}
+            >
+                <TouchableOpacity onPress={() => setShow(false)} activeOpacity={1}>
+                    <View style={{ backgroundColor: 'white', paddingHorizontal: 20, paddingVertical: 20, height: '100%' }}>
+                        <Image
+                            src={item.image}
+                            style={{ height: '90%', width: '100%', marginTop: 15, alignSelf: 'center' }}
+                        />
+                    </View>
+                </TouchableOpacity>
+            </Modal>
         </View>
     )
 }

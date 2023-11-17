@@ -26,7 +26,7 @@ const Cart = ({ navigation }) => {
     return (
         <View style={{ flex: 1, backgroundColor: '#002e65', paddingHorizontal: 16 }}>
             <Header
-                onPressHome={() => navigation.goBack()}
+                onPressHome={() => navigation.navigate('Home')}
                 onPressLogout={async () => {
                     await AsyncStorage.removeItem('Email')
                     await AsyncStorage.removeItem('Password')
@@ -34,16 +34,15 @@ const Cart = ({ navigation }) => {
                 }}
                 count={itemsInCart}
             />
-            <View style={{ flex: 1, justifyContent: 'space-between' }}>
-                <ScrollView>
-                    {
-                        cart.length === 0 ?
-                            <View style={{ backgroundColor: 'white', paddingVertical: 16, margin: 16, justifyContent: 'center', alignItems: 'center', borderRadius: 8 }}>
-                                <ActivityIndicator size={'large'} color={'black'} />
-                                <Text style={{ fontSize: 20, fontWeight: 500, color: 'black' }}>
-                                    Your cart is empty!
-                                </Text>
-                            </View> :
+            {
+                cart.length === 0 ?
+                    <View style={{ backgroundColor: 'white', paddingVertical: 16, margin: 16, justifyContent: 'center', alignItems: 'center', borderRadius: 8 }}>
+                        <Text style={{ fontSize: 20, fontWeight: 500, color: 'black' }}>
+                            Your cart is empty!
+                        </Text>
+                    </View> :
+                    <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                        <ScrollView>
                             <FlatList
                                 data={cart}
                                 keyExtractor={item => item.id}
@@ -62,46 +61,45 @@ const Cart = ({ navigation }) => {
                                     )
                                 }}
                             />
-                    }
-                </ScrollView>
+                        </ScrollView>
 
-                <View style={{ borderWidth: 4, borderColor: 'white', padding: 8, marginTop: 16 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontSize: 20, fontWeight: 500, color: 'white' }}>
-                            Total :
-                        </Text>
-                        <Text style={{ fontSize: 20, fontWeight: 500, color: 'white' }}>
-                            $ {price}
-                        </Text>
+                        <View style={{ borderWidth: 4, borderColor: 'white', padding: 8, marginTop: 16 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={{ fontSize: 20, fontWeight: 500, color: 'white' }}>
+                                    Total :
+                                </Text>
+                                <Text style={{ fontSize: 20, fontWeight: 500, color: 'white' }}>
+                                    $ {price}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={{ flexDirection: 'row', marginVertical: 8 }}>
+                            <TouchableOpacity
+                                style={{
+                                    paddingVertical: 8, width: '50%', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', borderRadius: 4, marginRight: 4
+                                }}
+                                onPress={() => navigation.navigate('Home')}
+                            >
+                                <Text style={{ fontSize: 16, fontWeight: 500, color: 'black' }}>
+                                    Shop More
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={{
+                                    paddingVertical: 8, width: '50%', justifyContent: 'center', alignItems: 'center', backgroundColor: 'orange', borderRadius: 4
+                                }}
+                                onPress={() => {
+                                    alert("Purchase Successful")
+                                    navigation.navigate('Home')
+                                }}
+                            >
+                                <Text style={{ fontSize: 16, fontWeight: 500, color: 'white' }}>
+                                    Buy Now
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-                <View style={{ flexDirection: 'row', marginVertical: 8 }}>
-                    <TouchableOpacity
-                        style={{
-                            paddingVertical: 8, width: '50%', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', borderRadius: 4, marginRight: 4
-                        }}
-                        onPress={() => navigation.navigate('Home')}
-                    >
-                        <Text style={{ fontSize: 16, fontWeight: 500, color: 'black' }}>
-                            Shop More
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            paddingVertical: 8, width: '50%', justifyContent: 'center', alignItems: 'center', backgroundColor: 'orange', borderRadius: 4
-                        }}
-                        onPress={() => {
-                            Alert("Purchase Successful")
-                            navigation.navigate('Login')
-                        }}
-                    >
-                        <Text style={{ fontSize: 16, fontWeight: 500, color: 'white' }}>
-                            Buy Now
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
+            }
         </View>
     )
 }
