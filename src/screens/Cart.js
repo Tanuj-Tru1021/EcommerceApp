@@ -12,6 +12,7 @@ const Cart = ({ navigation }) => {
     const handleIncrement = (item) => {
         addToCart(item)
     }
+    
 
     const handleDecrement = (item) => {
         removeFromCart(item.id, item.price)
@@ -54,9 +55,19 @@ const Cart = ({ navigation }) => {
                                             itemPrice={item.price}
                                             itemCount={item.rating.count}
                                             itemId={item.id}
-                                            onPressMinus={() => handleDecrement(item)}
+                                            onPressMinus={() => {
+                                                handleDecrement(item)
+                                                if(item.quantity === 0) {
+                                                    item.isAddedToCart = false
+                                                    console.log(item.isAddedToCart)
+                                                }
+                                                // item.quantityInCart-=1
+                                            }}
                                             counter={item.quantity}
-                                            onPressPlus={() => handleIncrement(item)}
+                                            onPressPlus={() => {
+                                                handleIncrement(item)
+                                                // item.quantityInCart+=1
+                                            }}
                                         />
                                     )
                                 }}

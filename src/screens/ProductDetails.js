@@ -1,8 +1,10 @@
-import { View, Text, ScrollView, Image, TouchableOpacity, Modal } from 'react-native'
+import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
 import React, { useContext, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Header from '../components/Header'
+import SnackBar from '../components/SnackBar'
 import { ApiContext } from '../components/ApiContext'
+import ImageModal from '../components/ImageView'
 
 const ProductDetails = ({ route, navigation }) => {
     const { item } = route.params
@@ -10,6 +12,7 @@ const ProductDetails = ({ route, navigation }) => {
     const [add, setAdd] = useState(false)
     const [disable, setDisable] = useState(false)
     const [show, setShow] = useState(false)
+    const [showSnackBar, setShowSnackBar] = useState(false)
     const { image, title, price, category, description } = item
     const { rate, count } = item.rating
     const review = rate > 3.5 ? "Good" : rate > 2 && rate < 3.5 ? "Average" : "Bad"
@@ -74,8 +77,9 @@ const ProductDetails = ({ route, navigation }) => {
                     }
                     <TouchableOpacity
                         onPress={() => {
-                            alert("Item added to cart")
+                            // alert("Item added to cart")
                             addToCart(item)
+                            setShowSnackBar(true)
                             setAdd(true)
                             setDisable(true)
                         }}
@@ -88,21 +92,23 @@ const ProductDetails = ({ route, navigation }) => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-
-            <Modal
-                visible={show}
-                animationType='fade'
-                transparent={true}
-            >
-                <TouchableOpacity onPress={() => setShow(false)} activeOpacity={1}>
-                    <View style={{ backgroundColor: 'white', paddingHorizontal: 20, paddingVertical: 20, height: '100%' }}>
-                        <Image
-                            src={item.image}
-                            style={{ height: '90%', width: '100%', marginTop: 15, alignSelf: 'center' }}
+            {
+                showSnackBar ?
+                    <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 16 }}>
+                        <SnackBar
+                            mainStyle={{ position: 'absolute', bottom: 0 }}
+                            onPressOk={() => {
+                                setShowSnackBar(false)
+                            }}
                         />
-                    </View>
-                </TouchableOpacity>
-            </Modal>
+                    </View> : ""
+            }
+
+            <ImageModal 
+              visible={show}
+              onPressBack={() => setShow(false)}
+              SRC={item.image}
+            />
         </View>
     )
 }
