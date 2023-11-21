@@ -2,18 +2,18 @@ import { View, TouchableOpacity, Text } from 'react-native'
 import React from 'react'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
-const Header = ({ onPressLogout, onPressCart, onPressHome, count }) => {
-    console.log(count)
+const Header = ({ onPressLogout, onPressCart, onPressHome, count, isHome, isCart, onPressClear }) => {
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30, marginBottom: 5 }}>
             <TouchableOpacity onPress={onPressHome}>
                 <Ionicon name="home" size={30} color='white' />
             </TouchableOpacity>
-            <View style={{ flexDirection: 'row' }}>
+
+            {isHome == true && <View style={{ flexDirection: 'row' }}>
                 <TouchableOpacity onPress={onPressCart}>
                     <View style={{ position: 'relative', marginRight: 15 }}>
                         <Ionicon name="cart" size={30} color="white" />
-                        {count > 0 && ( 
+                        {count > 0 && (
                             <View style={{
                                 position: 'absolute',
                                 backgroundColor: 'red',
@@ -33,7 +33,11 @@ const Header = ({ onPressLogout, onPressCart, onPressHome, count }) => {
                 <TouchableOpacity onPress={onPressLogout}>
                     <Ionicon name="log-out" size={30} color='white' />
                 </TouchableOpacity>
-            </View>
+            </View>}
+
+            {isCart && <TouchableOpacity onPress={onPressClear}>
+                <Ionicon name="trash" size={30} color='white' />
+            </TouchableOpacity>}
         </View>
     )
 }

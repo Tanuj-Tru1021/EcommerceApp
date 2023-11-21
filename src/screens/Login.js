@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Ecommerce from '../../assets/ecommerce.png'
-import EyeOpen from '../../assets/eye-open.png'
-import EyeClosed from '../../assets/eye-closed.png'
 
 const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/
 

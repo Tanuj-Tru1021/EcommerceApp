@@ -6,13 +6,16 @@ const ProductCard = ({ onPressImage, src, onPressCard, title, price, category, c
 
     const [counter, setCounter] = useState(1)
     const { products } = useContext(ApiContext)
+
     const call = () => {
         onPressAdd()
         item.isAddedToCart = true
-        item.quantityInCart+=1
+        item.quantityInCart = 1
         setCounter(1)
     }
+
     const item = products.find(el => el.id === id)
+
     return (
         <TouchableOpacity
             style={{ backgroundColor: 'white', paddingHorizontal: 16, paddingVertical: 16, borderRadius: 8, marginTop: 20, elevation: 100, shadowColor: 'white', }}
@@ -58,7 +61,6 @@ const ProductCard = ({ onPressImage, src, onPressCard, title, price, category, c
                             >
                                 <Text style={{ fontSize: 18, color: 'white', fontWeight: 500 }}>
                                     Add to Cart
-
                                 </Text>
                             </TouchableOpacity> :
                             <View style={{ flexDirection: 'row', marginTop: 20, borderColor: 'black', borderWidth: 2, justifyContent: 'space-between' }}>
@@ -66,9 +68,8 @@ const ProductCard = ({ onPressImage, src, onPressCard, title, price, category, c
                                     style={{ borderWidth: 2, borderColor: 'grey', paddingVertical: 4, paddingHorizontal: 30 }}
                                     onPress={() => {
                                         onPressMinus()
-                                        item.quantityInCart-=1
                                         setCounter(counter - 1)
-                                        if(item.quantityInCart < 1) {
+                                        if (item.quantityInCart < 1) {
                                             item.isAddedToCart = false
                                             // setCounter(1)
                                         }
@@ -87,7 +88,6 @@ const ProductCard = ({ onPressImage, src, onPressCard, title, price, category, c
                                     style={{ borderWidth: 2, borderColor: 'grey', paddingVertical: 4, paddingHorizontal: 30 }}
                                     onPress={() => {
                                         setCounter(counter + 1)
-                                        item.quantityInCart+=1
                                         onPressPlus()
                                     }}
                                 >
