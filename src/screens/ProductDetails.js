@@ -3,7 +3,6 @@ import React, { useContext, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Header from '../components/Header'
 import Ionicon from 'react-native-vector-icons/Ionicons'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
 import SnackBar from '../components/SnackBar'
 import { ApiContext } from '../components/ApiContext'
 import ImageModal from '../components/ImageView'
@@ -11,8 +10,6 @@ import ImageModal from '../components/ImageView'
 const ProductDetails = ({ route, navigation }) => {
     const { item } = route.params
     const { cart, addToCart, products, removeFromCart } = useContext(ApiContext)
-    const [add, setAdd] = useState(false)
-    const [disable, setDisable] = useState(false)
     const [show, setShow] = useState(false)
     const [showSnackBar, setShowSnackBar] = useState(false)
     const [counter, setCounter] = useState(1)
@@ -23,18 +20,14 @@ const ProductDetails = ({ route, navigation }) => {
     const handleIncrement = (item) => {
         addToCart(item)
     }
-
     const handleDecrement = (item) => {
         removeFromCart(item.id, item.price)
     }
-
     const countUniqueItems = () => {
         const uniqueItems = new Set(cart.map(item => item.id))
         return uniqueItems.size
     }
-
     const itemsInCart = countUniqueItems()
-
     const call = () => {
         addToCart(item)
         obj.isAddedToCart = true
@@ -45,7 +38,6 @@ const ProductDetails = ({ route, navigation }) => {
     const obj = products.find(el => el.id === id)
 
     return (
-        <SafeAreaProvider>
             <View style={{ flex: 1, backgroundColor: '#002e65', paddingHorizontal: 16, paddingTop: 8 }}>
                 <Header
                     isHome={true}
@@ -118,7 +110,6 @@ const ProductDetails = ({ route, navigation }) => {
                                             setCounter(counter - 1)
                                             if (obj.quantityInCart < 1) {
                                                 obj.isAddedToCart = false
-                                                // setCounter(1)
                                             }
                                         }}
                                     >
@@ -160,7 +151,6 @@ const ProductDetails = ({ route, navigation }) => {
                     SRC={item.image}
                 />
             </View>
-        </SafeAreaProvider>
     )
 }
 

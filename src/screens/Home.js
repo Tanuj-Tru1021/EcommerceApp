@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { View, FlatList, Text } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Header from '../components/Header';
-import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { ApiContext } from '../components/ApiContext';
 import ProductCard from '../components/ProductCard';
 import SnackBar from '../components/SnackBar';
@@ -17,11 +16,9 @@ const Home = ({ navigation }) => {
   const handleIncrement = (item) => {
     addToCart(item)
   }
-
   const handleDecrement = (item) => {
     removeFromCart(item.id, item.price)
   }
-
   const countUniqueItems = () => {
     const uniqueItems = new Set(cart.map(item => item.id))
     return uniqueItems.size
@@ -30,7 +27,6 @@ const Home = ({ navigation }) => {
   const itemsInCart = countUniqueItems()
 
   return (
-    <SafeAreaProvider>
       <View style={{ flex: 1, backgroundColor: '#002e65', paddingHorizontal: 16, paddingTop: 8 }}>
         <Header
           onPressLogout={async () => {
@@ -91,7 +87,6 @@ const Home = ({ navigation }) => {
           SRC={item.image}
         />
       </View>
-    </SafeAreaProvider>
   )
 }
 

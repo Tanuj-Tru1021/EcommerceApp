@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, FlatList, Modal } from 'react-native'
 import React, { useState, useContext } from 'react'
 import Header from '../components/Header'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import { ApiContext } from '../components/ApiContext'
@@ -17,28 +16,22 @@ const Cart = ({ navigation }) => {
     const handleIncrement = (item) => {
         addToCart(item)
     }
-
     const handleDecrement = (item) => {
         removeFromCart(item.id, item.price)
     }
-
     const removeSingleProduct = (product) => {
         removeProduct(product)
     }
-
     const countUniqueItems = () => {
         const uniqueItems = new Set(cart.map(item => item.id))
         return uniqueItems.size
     }
     const itemsInCart = countUniqueItems()
-
     const removeCart = () => {
         setShowModalCart(true)
     }
 
-    //removeSingleProduct(item)
     return (
-        <SafeAreaProvider>
             <View style={{ flex: 1, backgroundColor: '#002e65', paddingHorizontal: 16, paddingTop: 8 }}>
                 <Header
                     isCart={itemsInCart != 0 ? true : false}
@@ -221,7 +214,6 @@ const Cart = ({ navigation }) => {
                     </View>
                 </Modal>
             </View>
-        </SafeAreaProvider>
     )
 }
 
