@@ -2,9 +2,9 @@ import { View, TouchableOpacity, Text } from 'react-native'
 import React from 'react'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
-const Header = ({ onPressLogout, onPressCart, onPressHome, count, isHome, isCart, onPressClear }) => {
+const Header = ({ onPressLogout, onPressCart, onPressHome, count, isHome = false, isCart = false, onPressClear }) => {
     return (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30, marginBottom: 5 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between',  marginBottom: 5 }}>
             <TouchableOpacity onPress={onPressHome}>
                 <Ionicon name="home" size={30} color='white' />
             </TouchableOpacity>

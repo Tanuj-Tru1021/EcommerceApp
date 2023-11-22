@@ -15,8 +15,7 @@ const Navigator = () => {
   return (
     <ApiProvider>
       <NavigationContainer>
-        <StatusBar
-          translucent={true} backgroundColor='transparent' />
+        <StatusBar backgroundColor='#012E65' />
         <Stack.Navigator screenOptions={{
           headerShown: false
         }}>

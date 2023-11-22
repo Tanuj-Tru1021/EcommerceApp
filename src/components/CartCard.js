@@ -1,7 +1,8 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
+import Ionicon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
 
-const CartCard = ({ SRC, itemTitle, itemPrice, itemCount, onPressMinus, counter, onPressPlus }) => {
+const CartCard = ({ SRC, itemTitle, itemPrice, itemCount, onPressMinus, counter, onPressPlus, onPressRemove }) => {
     return (
         <View style={{ backgroundColor: 'white', paddingHorizontal: 16, paddingVertical: 16, borderRadius: 8, marginTop: 20, elevation: 100, shadowColor: 'white', flexDirection: 'row' }}>
             <Image
@@ -20,12 +21,10 @@ const CartCard = ({ SRC, itemTitle, itemPrice, itemCount, onPressMinus, counter,
                 }
                 <View style={{ flexDirection: 'row', marginTop: 20, borderColor: 'black', borderWidth: 2, justifyContent: 'space-between' }}>
                     <TouchableOpacity
-                        style={{ borderWidth: 2, borderColor: 'grey', paddingVertical: 4, paddingHorizontal: 30 }}
+                        style={{ paddingVertical: 4, paddingHorizontal: 20 }}
                         onPress={onPressMinus}
                     >
-                        <Text style={{ fontSize: 20, color: 'black', fontWeight: 500 }}>
-                            -
-                        </Text>
+                        <Ionicon name="remove-circle" size={30} color='black' />
                     </TouchableOpacity>
                     <View style={{ paddingVertical: 4, paddingHorizontal: 20, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 14, color: 'black', fontWeight: 500 }}>
@@ -33,14 +32,23 @@ const CartCard = ({ SRC, itemTitle, itemPrice, itemCount, onPressMinus, counter,
                         </Text>
                     </View>
                     <TouchableOpacity
-                        style={{ borderWidth: 2, borderColor: 'grey', paddingVertical: 4, paddingHorizontal: 30 }}
+                        style={{ paddingVertical: 4, paddingHorizontal: 20 }}
                         onPress={onPressPlus}
                     >
-                        <Text style={{ fontSize: 20, color: 'black', fontWeight: 500 }}>
-                            +
-                        </Text>
+                        <Ionicon name="add-circle" size={30} color='black' />
                     </TouchableOpacity>
                 </View>
+                <TouchableOpacity
+                    style={{ width: '100%', backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', marginTop: 4, borderWidth: 2, borderColor: 'black' }}
+                    onPress={onPressRemove}
+                >
+                    <View style={{ flexDirection: 'row' }}>
+                        <Ionicon name="trash-bin" size={30} color='black' />
+                        <Text style={{ fontSize: 16, fontWeight: 500, color: 'black', marginLeft: 4, top: 5 }}>
+                            Remove
+                        </Text>
+                    </View>
+                </TouchableOpacity>
             </View>
         </View>
     )

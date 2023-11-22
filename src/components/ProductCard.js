@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, Image, } from 'react-native'
 import React, { useState, useContext } from 'react'
+import Ionicon from 'react-native-vector-icons/Ionicons'
 import { ApiContext } from './ApiContext'
 
 const ProductCard = ({ onPressImage, src, onPressCard, title, price, category, count, rate, onPressAdd, onPressMinus, onPressPlus, id }) => {
@@ -18,7 +19,10 @@ const ProductCard = ({ onPressImage, src, onPressCard, title, price, category, c
 
     return (
         <TouchableOpacity
-            style={{ backgroundColor: 'white', paddingHorizontal: 16, paddingVertical: 16, borderRadius: 8, marginTop: 20, elevation: 100, shadowColor: 'white', }}
+            style={{
+                backgroundColor: 'white', padding: 16, borderRadius: 8,
+                marginTop: 20, elevation: 100, shadowColor: 'white',
+            }}
             onPress={onPressCard}
         >
             <View style={{ flexDirection: 'row' }}>
@@ -28,7 +32,7 @@ const ProductCard = ({ onPressImage, src, onPressCard, title, price, category, c
                         style={{ width: 120, height: 160, marginRight: 16 }}
                     />
                 </TouchableOpacity>
-                <View>
+                <View style={{ flex: 1 }}>
                     <View>
 
                         <Text style={{ fontSize: 16, fontWeight: 500, color: 'black', maxWidth: 200 }}>
@@ -63,37 +67,34 @@ const ProductCard = ({ onPressImage, src, onPressCard, title, price, category, c
                                     Add to Cart
                                 </Text>
                             </TouchableOpacity> :
-                            <View style={{ flexDirection: 'row', marginTop: 20, borderColor: 'black', borderWidth: 2, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center', borderWidth: 1, borderColor: 'red', paddingVertical: 4 }}>
+
                                 <TouchableOpacity
-                                    style={{ borderWidth: 2, borderColor: 'grey', paddingVertical: 4, paddingHorizontal: 30 }}
+                                    style={{ flex: 1, alignItems: 'center' }}
                                     onPress={() => {
                                         onPressMinus()
                                         setCounter(counter - 1)
                                         if (item.quantityInCart < 1) {
                                             item.isAddedToCart = false
-                                            // setCounter(1)
                                         }
                                     }}
                                 >
-                                    <Text style={{ fontSize: 20, color: 'black', fontWeight: 500 }}>
-                                        -
-                                    </Text>
+                                    <Ionicon name="remove-circle" size={20} color='black' />
                                 </TouchableOpacity>
-                                <View style={{ paddingVertical: 4, paddingHorizontal: 20, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ fontSize: 14, color: 'black', fontWeight: 500 }}>
-                                        {item.quantityInCart}
-                                    </Text>
-                                </View>
+
+
+                                <Text style={{ fontSize: 14, color: 'black', fontWeight: 500, paddingHorizontal: 10 }}>
+                                    {item.quantityInCart}
+                                </Text>
+
                                 <TouchableOpacity
-                                    style={{ borderWidth: 2, borderColor: 'grey', paddingVertical: 4, paddingHorizontal: 30 }}
+                                    style={{ flex: 1, alignItems: 'center' }}
                                     onPress={() => {
                                         setCounter(counter + 1)
                                         onPressPlus()
                                     }}
                                 >
-                                    <Text style={{ fontSize: 20, color: 'black', fontWeight: 500 }}>
-                                        +
-                                    </Text>
+                                    <Ionicon name="add-circle" size={20} color='black' />
                                 </TouchableOpacity>
                             </View>
                     }

@@ -16,7 +16,7 @@ const useRequest = (url) => {
         fetchData()
     }, [url])
 
-    return { data, loading }
+    return { data }
 }
 
 export default useRequest
