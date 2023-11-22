@@ -14,6 +14,7 @@ const Splash = ({ navigation }) => {
             navigation.navigate('Login')
             : navigation.navigate('Home')
         await AsyncStorage.setItem("token", "false")
+        setFlag(await AsyncStorage.getItem("token"))
     }
 
     const setToken = async () => {

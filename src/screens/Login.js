@@ -43,6 +43,7 @@ const Login = ({ navigation }) => {
         </Text>
         <TextInput
           placeholder='Enter your email address'
+          autoCapitalize='none'
           placeholderTextColor={'grey'}
           keyboardType='email-address'
           onChangeText={(text) => {
@@ -62,6 +63,7 @@ const Login = ({ navigation }) => {
         <View style={{ flexDirection: 'row' }}>
           <TextInput
             placeholder='Enter your password'
+            autoCapitalize='none'
             placeholderTextColor={'grey'}
             secureTextEntry={hidePassword}
             onChangeText={(text) => {
