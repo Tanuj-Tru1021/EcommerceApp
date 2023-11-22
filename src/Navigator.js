@@ -42,7 +42,7 @@ const AuthCheck = ({ navigation }) => {
   const handleLogin = async () => {
     const mEmail = await AsyncStorage.getItem('Email')
     const mPassword = await AsyncStorage.getItem('Password')
-    !mEmail && !mPassword ? navigation.navigate('Login') : navigation.navigate('Home')
+    !mEmail && !mPassword ? navigation.replace('Login') : navigation.replace('Home')
   }
 
   return (

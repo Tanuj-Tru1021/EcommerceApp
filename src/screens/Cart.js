@@ -116,6 +116,7 @@ const Cart = ({ navigation }) => {
                                         onPress={() => {
                                             alert("Purchase Successful")
                                             navigation.navigate('Home')
+                                            clearCart()
                                         }}
                                     >
                                         <Text style={{ fontSize: 16, fontWeight: 500, color: 'white' }}>
