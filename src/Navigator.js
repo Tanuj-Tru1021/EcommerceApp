@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StatusBar } from 'react-native'
+import { StatusBar, SafeAreaView } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { ApiProvider } from './components/ApiContext'
@@ -8,7 +8,7 @@ import Login from './screens/Login'
 import Home from './screens/Home'
 import ProductDetails from './screens/ProductDetails'
 import Cart from './screens/Cart'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
+
 
 const Stack = createNativeStackNavigator()
 
@@ -17,7 +17,7 @@ const Navigator = () => {
     <ApiProvider>
       <NavigationContainer>
         <StatusBar backgroundColor='#012E65' />
-        <SafeAreaProvider>
+        <SafeAreaView style={{ flex: 1 }}>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="AuthCheck" component={AuthCheck} />
             <Stack.Screen name="Login" component={Login} />
@@ -25,7 +25,7 @@ const Navigator = () => {
             <Stack.Screen name='ProductDetails' component={ProductDetails} />
             <Stack.Screen name='Cart' component={Cart} />
           </Stack.Navigator>
-        </SafeAreaProvider>
+        </SafeAreaView>
       </NavigationContainer>
     </ApiProvider>
   )
@@ -42,7 +42,7 @@ const AuthCheck = ({ navigation }) => {
   const handleLogin = async () => {
     const mEmail = await AsyncStorage.getItem('Email')
     const mPassword = await AsyncStorage.getItem('Password')
-    !mEmail && !mPassword ? navigation.replace('Login') : navigation.replace('Home')
+    !mEmail && !mPassword ? navigation.navigate('Login') : navigation.navigate('Home')
   }
 
   return (

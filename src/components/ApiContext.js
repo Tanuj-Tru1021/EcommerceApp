@@ -12,7 +12,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchData = async () => {
         try {
-            const url = "http://fakestoreapi.com/products"
+            const url = "https://fakestoreapi.com/products"
             const response = await axios.get(url)
             setProducts(response.data.map(obj => ({ ...obj, isAddedToCart: false })))
         } catch (error) {
@@ -23,11 +23,6 @@ export const ApiProvider = ({ children }) => {
     useEffect(() => {
         fetchData()
     }, [])
-    // 1 quantitiy  added  then + 1  == if
-
-    // new produxct = 1 //  
-
-
 
     const addToCart = (product) => {
         const existingProductIndex = cart.findIndex(item => item.id === product.id)
@@ -74,7 +69,7 @@ export const ApiProvider = ({ children }) => {
 
     const removeProduct = (product) => {
         setCart(cart.filter((e) => e.id !== product.id))
-        setPrice(price - product.price*product.quantity)
+        setPrice(price - product.price * product.quantity)
         const upadateProduct = products.map(item => item.id === product.id ? { ...item, isAddedToCart: false } : item)
         setProducts(upadateProduct)
     }

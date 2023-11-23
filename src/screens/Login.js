@@ -15,13 +15,21 @@ const Login = ({ navigation }) => {
   }
 
   const getData = async () => {
-    await AsyncStorage.setItem('Email', credentials.email)
-    await AsyncStorage.setItem('Password', credentials.password)
-    setCredentials({
-      email: '',
-      password: ''
-    })
-    navigation.navigate('Home')
+    if (reg.test(credentials.email) && credentials.password.length > 5) {
+      await AsyncStorage.setItem('Email', credentials.email)
+      await AsyncStorage.setItem('Password', credentials.password)
+      setCredentials({
+        email: '',
+        password: ''
+      })
+      navigation.navigate('Home')
+    } else if (credentials.password.length < 5) {
+      alert("Minimum password length should be 5")
+    } else if (credentials.email.length === 0) {
+      alert("Email address cannot be empty")
+    } else {
+      alert("Invalid email address")
+    }
   }
 
   const disabled = (credentials.email.length === 0 && credentials.password.length === 0)
@@ -60,7 +68,7 @@ const Login = ({ navigation }) => {
         <Text style={{ fontSize: 20, color: 'white', marginBottom: 8 }}>
           Password
         </Text>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
           <TextInput
             placeholder='Enter your password'
             autoCapitalize='none'
@@ -71,12 +79,12 @@ const Login = ({ navigation }) => {
               setError(prev => ({ ...prev, password: (!text) }))
             }}
             value={credentials.password}
-            style={{ paddingVertical: 6, paddingHorizontal: 16, marginBottom: 16, backgroundColor: 'white', borderRadius: 8, width: '100%', position: 'relative' }}
+            style={{ paddingVertical: 6, paddingHorizontal: 16, marginBottom: 4, backgroundColor: 'white', borderRadius: 8, width: '100%', position: 'relative' }}
           />
           <TouchableOpacity onPress={() => manageVisibility()}>
             <Image
               source={hidePassword ? require('../../assets/eye-closed.png') : require('../../assets/eye-open.png')}
-              style={{ width: 27, height: 24, position: 'absolute', tintColor: '#C4C4C4', justifyContent: 'center', top: 8, right: 12 }}
+              style={{ width: 24, height: 16, position: 'absolute', tintColor: '#C4C4C4', justifyContent: 'center', top: 8, right: 12 }}
             />
           </TouchableOpacity>
         </View>
@@ -85,7 +93,7 @@ const Login = ({ navigation }) => {
         {(credentials.password && credentials.password.length < 5) && <RenderError message='Password should be minimum 5 characters' />}
 
         <TouchableOpacity
-          style={{ backgroundColor: disabled ? 'grey' : '#00a3e5', paddingVertical: 20, justifyContent: 'center', alignItems: 'center', borderRadius: 37, marginBottom: 30 }}
+          style={{ backgroundColor: disabled ? 'grey' : '#00a3e5', paddingVertical: 20, justifyContent: 'center', alignItems: 'center', borderRadius: 37, marginBottom: 30, marginTop: 16 }}
           disabled={disabled}
           onPress={() => getData()}
         >
